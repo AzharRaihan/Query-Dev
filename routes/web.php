@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,26 +29,12 @@ Route::get('sub-query-join','QueryController@subQueryJoin');
 // Eloquant Relation
 
 
-Route::get('user', function(){
-    factory(\App\User::class, 4)->create();
-    \App\Address::create([
-        'user_id' => 1,
-        'country' => 'Bangladesh',
-    ]);
-    \App\Address::create([
-        'user_id' => 2,
-        'country' => 'Nepal',
-    ]);
-    \App\Address::create([
-        'user_id' => 3,
-        'country' => 'Pakistan',
-    ]);
-    \App\Address::create([
-        'user_id' => 4,
-        'country' => 'Malaysia',
-    ]);
-    return 'Success';
-});
+Route::resource('post', PostController::class);
 
-// 
-Route::get('eloquent', 'EloquenController@index');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/dummy', function(){
+    factory(App\User::class, 10)->create();
+});
