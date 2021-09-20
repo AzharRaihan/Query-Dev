@@ -38,3 +38,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/dummy', function(){
     factory(App\User::class, 10)->create();
 });
+
+
+Route::get('image-upload','FileController@createForm');
+Route::post('/image-upload','FileController@fileUpload')->name('imageUpload');
