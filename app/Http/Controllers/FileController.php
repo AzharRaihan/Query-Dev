@@ -21,17 +21,14 @@ class FileController extends Controller
             foreach($req->file('filenames') as $file)
             {
                 $name = $file->getClientOriginalName();
-                $file->move(public_path().'uploads/', $name);
-                $imgData[] = $name;
+                $filename = time() . '.' . $name;
+                $file->move('uploads/', $filename);
+                $imgData[] = $filename;
             }
-
             $fileModal = new File();
             $fileModal->filenames = json_encode($imgData);
-
-
             $fileModal->save();
-
-           return back();
+            return back();
         }
     }
 }
