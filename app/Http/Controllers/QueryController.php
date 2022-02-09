@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Album;
+use App\Gallery;
+use App\Year;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -59,5 +62,26 @@ class QueryController extends Controller
         })
         ->get();
         dd($data);
+    }
+
+
+    public function deleteY($id){
+        $year = Year::findOrFail($id);
+        foreach($year->albums() as $item){
+            $item->delete();
+        }
+        $year->delete();
+        return 'success';
+    }
+    public function deleteA($id){
+        $album = Album::findOrFail($id);
+        $album->gallery()->delete();
+        $album->delete();
+        return 'success';
+    }
+    public function deleteG($id){
+        $gallery = Gallery::findOrFail($id);
+        $gallery->delete();
+        return 'success';
     }
 }

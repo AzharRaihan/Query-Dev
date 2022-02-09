@@ -18,9 +18,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 // Join Query
 Route::get('inner-join','QueryController@innerJoin');
@@ -40,43 +37,16 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 
-Route::get('/dummy', function(){
-    // factory(App\User::class, 3)->create();
-    // factory(App\Project::class, 3)->create();
-    $project = Project::create([
-        'title' => 'Project A',
-    ]);
-    $user1 = User::create([
-        'name' => 'Azhar Raihan',
-        'email' => 'azhar@gmail.com',
-        'password' => Hash::make('password'),
-        'project_id' => $project->id
-    ]);
-    $user2 = User::create([
-        'name' => 'Azhar Raihan 2',
-        'email' => 'azhar2@gmail.com',
-        'password' => Hash::make('password'),
-        'project_id' => $project->id
-    ]);
-    $task1 = Task::create([
-        'title' => 'Task 1 for project 1 by user 1',
-        'user_id' => $user1->id
-    ]);
-    $task2 = Task::create([
-        'title' => 'Task 2 for project 1 by user 1',
-        'user_id' => $user1->id
-    ]);
-    $task3 = Task::create([
-        'title' => 'Task 3 for project 1 by user 1',
-        'user_id' => $user2->id
-    ]);
-});
 
-Route::get('retrive', function(){
-    $project = Project::find(1);
-    dd($project->users[1]->tasks);
-});
 
 
 Route::get('image-upload','FileController@createForm');
 Route::post('/image-upload','FileController@fileUpload')->name('imageUpload');
+
+Route::get('delete-y/{id}', 'QueryController@deleteY');
+Route::get('delete-a/{id}', 'QueryController@deleteA');
+Route::get('delete-g/{id}', 'QueryController@deleteG');
+
+
+Route::resource('parent', ParentController::class);
+Route::resource('child', ChildController::class);
